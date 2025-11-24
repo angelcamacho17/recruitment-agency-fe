@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng new:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(firebase --version)",
+      "Bash(npm run build)",
+      "Bash(npm uninstall:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(npm start)",
+      "Read(//Users/angelcamacho/**)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
