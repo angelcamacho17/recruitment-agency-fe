@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -89,11 +90,27 @@ import { RouterModule } from '@angular/router';
           </svg>
           <span>Gestión de Candidatos</span>
         </a>
+
+        <!-- Separator -->
+        <div class="my-4 border-t border-gray-700"></div>
+
+        <!-- Logout Button -->
+        <button
+          (click)="handleLogout()"
+          class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-900 transition-colors text-red-400 hover:text-red-300"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+          <span>Cerrar Sesión</span>
+        </button>
       </nav>
     </aside>
   `
 })
 export class SidebarComponent {
+  private authService = inject(AuthService);
+
   isOpen = signal(false);
 
   toggleMenu() {
@@ -102,5 +119,12 @@ export class SidebarComponent {
 
   closeMenu() {
     this.isOpen.set(false);
+  }
+
+  handleLogout() {
+    if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+      this.authService.logout();
+      this.closeMenu();
+    }
   }
 }
