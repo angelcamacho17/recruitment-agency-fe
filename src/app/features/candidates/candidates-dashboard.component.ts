@@ -54,7 +54,7 @@ import {
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm text-gray-600">Score Promedio</p>
-              <p class="text-3xl font-bold text-blue-600">{{ (statistics()!.average_score || 0).toFixed(1) }}</p>
+              <p class="text-3xl font-bold text-blue-600">{{ getAverageScore() }}</p>
             </div>
             <div class="text-4xl">⭐</div>
           </div>
@@ -447,5 +447,14 @@ export class CandidatesDashboardComponent implements OnInit {
       'descartar': 'bg-red-100 text-red-800'
     };
     return colors[category] || 'bg-gray-100 text-gray-800';
+  }
+
+  getAverageScore(): string {
+    const stats = this.statistics();
+    if (!stats || stats.average_score == null) {
+      return '0.0';
+    }
+    const score = Number(stats.average_score);
+    return isNaN(score) ? '0.0' : score.toFixed(1);
   }
 }
