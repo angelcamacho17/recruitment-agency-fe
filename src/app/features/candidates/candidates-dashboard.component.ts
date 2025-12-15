@@ -54,7 +54,7 @@ import {
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm text-gray-600">Score Promedio</p>
-              <p class="text-3xl font-bold text-blue-600">{{ statistics()!.average_score.toFixed(1) }}</p>
+              <p class="text-3xl font-bold text-blue-600">{{ (statistics()!.average_score || 0).toFixed(1) }}</p>
             </div>
             <div class="text-4xl">⭐</div>
           </div>
