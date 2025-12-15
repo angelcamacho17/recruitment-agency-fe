@@ -38,3 +38,37 @@ export interface AnalysisResult {
   candidatos: CandidateScore[];
   rawResponse?: string;
 }
+
+// SSE Progress Events
+export interface ProgressEvent {
+  step: 'start' | 'upload' | 'excel' | 'pdfs' | 'prompt' | 'claude' | 'cleanup' | 'complete' | 'error' | 'warning';
+  message: string;
+  timestamp: string;
+
+  // Datos opcionales según el step
+  candidatesCount?: number;
+  total?: number;
+  current?: number;
+  progress?: number;
+  error?: boolean;
+  warning?: boolean;
+  info?: string;
+  successful?: number;
+  failed?: number;
+  promptSize?: number;
+  promptSizeKB?: number;
+}
+
+export interface FinalResult {
+  done: true;
+  success: boolean;
+  analysis?: AnalysisResult;
+  metadata?: {
+    totalCandidatos: number;
+    totalCVsProcesados: number;
+    totalCVsConError: number;
+    timestamp: string;
+  };
+  error?: string;
+  details?: string;
+}

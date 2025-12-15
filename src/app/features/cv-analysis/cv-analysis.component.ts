@@ -2,13 +2,12 @@ import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CvAnalysisService } from '../../core/services/cv-analysis.service';
-import { AnalysisResult, CandidateScore } from '../../core/models/cv-analysis.model';
-import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner.component';
+import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../../core/models/cv-analysis.model';
 
 @Component({
   selector: 'app-cv-analysis',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
+  imports: [CommonModule, FormsModule],
   template: `
     <div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
       <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Análisis de CVs con Claude</h1>
@@ -99,11 +98,53 @@ import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner
           <strong>❌ Error:</strong> {{ error() }}
         </div>
 
-        <!-- Loading -->
-        <div *ngIf="loading()" class="mt-6">
-          <app-loading-spinner></app-loading-spinner>
-          <p class="text-center text-sm text-gray-600 mt-4">
-            ⏳ Analizando candidatos con IA... Esto puede tomar 1-2 minutos.
+        <!-- Progress Section -->
+        <div *ngIf="loading()" class="mt-6 bg-white rounded-lg shadow-md p-6">
+          <!-- Current Step -->
+          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span>{{ getStepIcon(currentStep()) }}</span>
+            <span>{{ currentMessage() }}</span>
+          </h3>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden mb-2">
+            <div
+              class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300 flex items-center justify-end pr-2"
+              [style.width.%]="progressPercentage()"
+            >
+              <span *ngIf="progressPercentage() > 10" class="text-white text-xs font-bold">
+                {{ progressPercentage() }}%
+              </span>
+            </div>
+          </div>
+          <p class="text-center text-sm font-medium text-blue-600 mb-4">
+            {{ progressPercentage() }}%
+          </p>
+
+          <!-- Progress Log -->
+          <div *ngIf="progressLog().length > 0" class="mt-6">
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">📋 Detalle del progreso:</h4>
+            <div class="max-h-64 overflow-y-auto bg-gray-50 rounded-lg p-4 space-y-2">
+              <div
+                *ngFor="let log of progressLog()"
+                class="flex items-start gap-3 text-sm border-b border-gray-200 pb-2 last:border-0"
+                [class.text-red-600]="log.error"
+                [class.text-yellow-600]="log.warning"
+              >
+                <span class="text-lg">{{ getStepIcon(log.step) }}</span>
+                <div class="flex-1">
+                  <p class="text-gray-900">{{ log.message }}</p>
+                  <p *ngIf="log.info" class="text-xs text-gray-500 mt-1">{{ log.info }}</p>
+                </div>
+                <span class="text-xs text-gray-400 whitespace-nowrap">
+                  {{ log.timestamp | date:'HH:mm:ss' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-center text-xs text-gray-500 mt-4">
+            Este proceso puede tomar 1-2 minutos dependiendo del número de candidatos...
           </p>
         </div>
       </div>
@@ -280,6 +321,12 @@ export class CvAnalysisComponent {
   analysisResult = signal<AnalysisResult | null>(null);
   filterCategory = signal<'todos' | 'entrevistar' | 'quizas' | 'descartar'>('todos');
 
+  // Progress tracking
+  currentStep = signal<string>('');
+  currentMessage = signal<string>('');
+  progressPercentage = signal<number>(0);
+  progressLog = signal<ProgressEvent[]>([]);
+
   canAnalyze(): boolean {
     return !!this.excelFile();
   }
@@ -304,29 +351,103 @@ export class CvAnalysisComponent {
       return;
     }
 
+    // Reset state
     this.loading.set(true);
     this.error.set(null);
+    this.analysisResult.set(null);
+    this.progressLog.set([]);
+    this.progressPercentage.set(0);
+    this.currentStep.set('');
+    this.currentMessage.set('');
 
-    console.log('🚀 Iniciando análisis...');
+    console.log('🚀 Iniciando análisis con progreso en tiempo real...');
 
-    // Llamar al servicio del backend
-    this.cvAnalysisService.analyzeCV(this.excelFile()!, this.pdfFiles()).subscribe({
-      next: (result) => {
-        this.analysisResult.set(result);
-        this.loading.set(false);
+    // Usar el método con SSE para progreso en tiempo real
+    this.cvAnalysisService.analyzeCVWithProgress(this.excelFile()!, this.pdfFiles()).subscribe({
+      next: (event) => {
+        // Verificar si es el evento final
+        if ('done' in event) {
+          const finalEvent = event as FinalResult;
 
-        console.log('✅ Análisis completado:', result);
-        console.log(`📊 Total analizados: ${result.resumen.totalAnalizados}`);
-        console.log(`✅ Para entrevistar: ${result.resumen.paraEntrevistar}`);
-        console.log(`🤔 Quizás: ${result.resumen.quizas}`);
-        console.log(`❌ Descartados: ${result.resumen.descartados}`);
+          if (finalEvent.success && finalEvent.analysis) {
+            this.analysisResult.set(finalEvent.analysis);
+            this.currentMessage.set('¡Análisis completado exitosamente!');
+            this.progressPercentage.set(100);
+
+            console.log('✅ Análisis completado:', finalEvent.analysis);
+            console.log(`📊 Total analizados: ${finalEvent.analysis.resumen.totalAnalizados}`);
+            console.log(`✅ Para entrevistar: ${finalEvent.analysis.resumen.paraEntrevistar}`);
+            console.log(`🤔 Quizás: ${finalEvent.analysis.resumen.quizas}`);
+            console.log(`❌ Descartados: ${finalEvent.analysis.resumen.descartados}`);
+          } else {
+            this.error.set(finalEvent.error || 'Error desconocido en el análisis');
+            this.currentMessage.set(`Error: ${finalEvent.error}`);
+          }
+
+          this.loading.set(false);
+        } else {
+          // Evento de progreso
+          const progressEvent = event as ProgressEvent;
+
+          this.currentStep.set(progressEvent.step);
+          this.currentMessage.set(progressEvent.message);
+
+          // Agregar al log
+          const currentLog = this.progressLog();
+          this.progressLog.set([...currentLog, progressEvent]);
+
+          // Actualizar porcentaje
+          this.updateProgressPercentage(progressEvent);
+
+          console.log(`${this.getStepIcon(progressEvent.step)} ${progressEvent.message}`);
+        }
       },
       error: (err) => {
         console.error('❌ Error:', err);
-        this.error.set(err.message || 'Error al analizar los CVs. Verifica los archivos.');
+        this.error.set(err.message || 'Error al analizar los CVs. Verifica la conexión con el servidor.');
+        this.currentMessage.set('Error de conexión');
         this.loading.set(false);
       }
     });
+  }
+
+  private updateProgressPercentage(event: ProgressEvent) {
+    // Si el evento incluye progreso directo, usarlo
+    if (event.progress !== undefined) {
+      this.progressPercentage.set(event.progress);
+      return;
+    }
+
+    // Calcular progreso basado en el step
+    const stepProgress: Record<string, number> = {
+      'start': 5,
+      'upload': 10,
+      'excel': 20,
+      'pdfs': 50,
+      'prompt': 60,
+      'claude': 90,
+      'cleanup': 95,
+      'complete': 100
+    };
+
+    const progress = stepProgress[event.step] || this.progressPercentage();
+    this.progressPercentage.set(progress);
+  }
+
+  getStepIcon(step: string): string {
+    const icons: Record<string, string> = {
+      'start': '🚀',
+      'upload': '📤',
+      'excel': '📊',
+      'pdfs': '📄',
+      'prompt': '✍️',
+      'claude': '🤖',
+      'cleanup': '🧹',
+      'complete': '✅',
+      'error': '❌',
+      'warning': '⚠️'
+    };
+    return icons[step] || '📍';
   }
 
   reset() {
@@ -335,6 +456,10 @@ export class CvAnalysisComponent {
     this.pdfFiles.set([]);
     this.error.set(null);
     this.filterCategory.set('todos');
+    this.progressLog.set([]);
+    this.progressPercentage.set(0);
+    this.currentStep.set('');
+    this.currentMessage.set('');
   }
 
   getCandidatesByCategory(category: 'entrevistar' | 'quizas' | 'descartar'): CandidateScore[] {
