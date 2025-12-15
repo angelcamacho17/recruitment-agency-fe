@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/emails/emails-list.component').then(m => m.EmailsListComponent)
   },
   {
+    path: 'cv-analysis',
+    loadComponent: () => import('./features/cv-analysis/cv-analysis.component').then(m => m.CvAnalysisComponent)
+  },
+  {
     path: '**',
     redirectTo: '/dashboard'
   }
