@@ -36,7 +36,7 @@ import {
               </span>
             </div>
             <div class="space-y-1">
-              <p class="text-gray-600">📧 {{ candidate.email }}</p>
+              <p class="text-gray-600">📧 <span class="blur-sm">{{ candidate.email }}</span></p>
               <p *ngIf="candidate.telefono || candidate.phone" class="text-gray-600">
                 📞 {{ candidate.telefono || candidate.phone }}
               </p>
@@ -201,7 +201,7 @@ import {
                   </div>
                   <div class="flex-1">
                     <h3 class="font-semibold text-gray-900 blur-sm">{{ candidate.nombre || candidate.name }}</h3>
-                    <p class="text-sm text-gray-600">{{ candidate.email }}</p>
+                    <p class="text-sm text-gray-600 blur-sm">{{ candidate.email }}</p>
                     <p class="text-xs text-gray-500 mt-1">{{ candidate.fortalezaPrincipal || candidate.main_strength }}</p>
                   </div>
                   <div class="text-right">
@@ -314,7 +314,7 @@ import {
                     <div class="flex items-start justify-between">
                       <div class="flex-1">
                         <h3 class="font-semibold text-gray-900 blur-sm">{{ candidate.nombre || candidate.name }}</h3>
-                        <p class="text-sm text-gray-600">{{ candidate.email }}</p>
+                        <p class="text-sm text-gray-600 blur-sm">{{ candidate.email }}</p>
                         <p class="text-sm text-gray-500 mt-1">📞 {{ candidate.telefono || candidate.phone }}</p>
                         <p class="text-sm text-gray-700 mt-2">
                           <strong>Fortaleza:</strong> {{ candidate.fortalezaPrincipal || candidate.main_strength }}
