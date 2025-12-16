@@ -387,7 +387,7 @@ import {
                     <p class="text-xs font-semibold text-gray-600 mb-2">🏆 Top 3:</p>
                     <div class="space-y-1">
                       <p *ngFor="let top of analysis.summary.top3" class="text-sm text-gray-700">
-                        {{ top.nombre }} ({{ top.score }})
+                        <span class="blur-[2px]">{{ top.nombre }}</span> ({{ top.score }})
                       </p>
                     </div>
                   </div>
