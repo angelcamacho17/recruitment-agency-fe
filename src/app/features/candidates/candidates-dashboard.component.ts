@@ -2,7 +2,7 @@ import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AnalysesService } from '../../core/services/analyses.service';
+import { AnalysesMockService } from '../../core/services/analyses-mock.service';
 import {
   AnalysisSummary,
   CandidateDetail,
@@ -422,7 +422,7 @@ import {
   `
 })
 export class CandidatesDashboardComponent implements OnInit {
-  private analysesService = inject(AnalysesService);
+  private analysesService = inject(AnalysesMockService);
 
   // State
   statistics = signal<Statistics | null>(null);

@@ -2,7 +2,7 @@ import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AnalysesService } from '../../core/services/analyses.service';
+import { AnalysesMockService } from '../../core/services/analyses-mock.service';
 import { AnalysisDetail, CandidateDetail } from '../../core/models/analyses.model';
 
 @Component({
@@ -216,7 +216,7 @@ import { AnalysisDetail, CandidateDetail } from '../../core/models/analyses.mode
 export class AnalysisDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private analysesService = inject(AnalysesService);
+  private analysesService = inject(AnalysesMockService);
 
   // State
   analysis = signal<AnalysisDetail | null>(null);

@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CvAnalysisService } from '../../core/services/cv-analysis.service';
+import { CvAnalysisMockService } from '../../core/services/cv-analysis-mock.service';
 import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../../core/models/cv-analysis.model';
 
 @Component({
@@ -309,7 +309,7 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
   `
 })
 export class CvAnalysisComponent {
-  private cvAnalysisService = inject(CvAnalysisService);
+  private cvAnalysisService = inject(CvAnalysisMockService);
 
   // Form data
   excelFile = signal<File | null>(null);

@@ -15,7 +15,10 @@
       "Bash(git commit:*)",
       "Bash(git check-ignore:*)",
       "Bash(node -e \"console.log(''mvp-admin-'' + require(''crypto'').randomBytes(24).toString(''hex''))\")",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
