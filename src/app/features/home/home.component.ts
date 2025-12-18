@@ -38,12 +38,12 @@ interface AIAgent {
               <div class="text-gray-600 font-medium">Agentes IA</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">24/7</div>
-              <div class="text-gray-600 font-medium">Disponibilidad</div>
+              <div class="text-4xl font-bold text-primary-600 mb-2">77</div>
+              <div class="text-gray-600 font-medium">CVs Analizados</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">∞</div>
-              <div class="text-gray-600 font-medium">Análisis</div>
+              <div class="text-4xl font-bold text-primary-600 mb-2">24/7</div>
+              <div class="text-gray-600 font-medium">Disponibilidad</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
               <div class="text-4xl font-bold text-primary-600 mb-2">100%</div>
@@ -103,7 +103,7 @@ export class HomeComponent {
       id: 'cv-scout',
       name: 'CV Scout',
       title: 'Análisis Inteligente de CVs',
-      description: 'Analiza y evalúa candidatos automáticamente usando IA avanzada. Obtén scores, fortalezas y recomendaciones en segundos.',
+      description: 'Analiza y evalúa candidatos automáticamente usando IA avanzada. Obtén scores, fortalezas y recomendaciones en segundos. 77 CVs analizados = ~38.5 horas humanas ahorradas (30 min/CV).',
       icon: '🎯',
       route: '/cv-analysis',
       color: 'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -113,7 +113,7 @@ export class HomeComponent {
       id: 'talent-matcher',
       name: 'Talent Matcher',
       title: 'Matching Inteligente',
-      description: 'Conecta automáticamente candidatos con posiciones ideales usando algoritmos de IA. Ahorra tiempo y mejora la precisión.',
+      description: 'Conecta automáticamente candidatos con posiciones ideales usando algoritmos de IA. 77 CVs matcheados = ~25.5 horas humanas ahorradas (20 min/CV).',
       icon: '🤝',
       route: '/talent-matching',
       color: 'bg-gradient-to-br from-green-500 to-green-600',
