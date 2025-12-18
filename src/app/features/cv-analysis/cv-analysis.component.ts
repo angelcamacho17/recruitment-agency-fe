@@ -1,56 +1,66 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { CvAnalysisMockService } from '../../core/services/cv-analysis-mock.service';
 import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../../core/models/cv-analysis.model';
 
 @Component({
   selector: 'app-cv-analysis',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   template: `
-    <div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Análisis de CVs con IA</h1>
-      <p class="text-gray-600 mb-6 text-sm sm:text-base">Analiza candidatos usando Inteligencia Artificial</p>
+    <div class="p-4 sm:p-6 bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen">
+      <!-- Back to home -->
+      <button
+        routerLink="/"
+        class="mb-4 px-4 py-2 bg-white text-gray-700 rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+      >
+        <span>←</span> Volver al Centro de Agentes
+      </button>
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+          <span class="text-5xl">🎯</span>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">CV Scout</h1>
+        <p class="text-xl text-gray-600">Análisis Inteligente de CVs con IA</p>
+      </div>
+
+      <!-- Prominent button to view candidates -->
+      <div class="max-w-4xl mx-auto mb-6">
+        <a
+          routerLink="/candidates"
+          class="block bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 text-center"
+        >
+          📊 Ver Análisis de CVs Guardados
+        </a>
+      </div>
 
       <!-- Formulario de carga -->
-      <div *ngIf="!analysisResult()" class="bg-white rounded-lg shadow-md p-4 sm:p-6 max-w-4xl">
+      <div *ngIf="!analysisResult() && !loading()" class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-4xl mx-auto">
         <div class="space-y-6">
-
-          <!-- Archivo Excel -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Archivo Excel (respuestas de Google Forms) *
-            </label>
-            <input
-              type="file"
-              accept=".xlsx,.xls,.csv"
-              (change)="onExcelFileSelected($event)"
-              class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-800"
-            />
-            <p class="text-xs text-gray-500 mt-1" *ngIf="excelFile()">
-              Archivo seleccionado: {{ excelFile()?.name }}
-            </p>
-          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Subir CVs para Análisis</h2>
 
           <!-- CVs en PDF -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              CVs en PDF (opcional, múltiples archivos)
+            <label class="block text-lg font-semibold text-gray-800 mb-3">
+              📄 Selecciona los CVs en PDF *
             </label>
             <input
               type="file"
               accept=".pdf"
               multiple
               (change)="onPdfFilesSelected($event)"
-              class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-800"
+              class="w-full text-base text-gray-700 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-base file:font-semibold file:bg-gradient-to-r file:from-blue-500 file:to-blue-600 file:text-white hover:file:from-blue-600 hover:file:to-blue-700 transition-all cursor-pointer"
             />
-            <p class="text-xs text-gray-500 mt-1" *ngIf="pdfFiles().length > 0">
-              {{ pdfFiles().length }} archivo(s) seleccionado(s)
+            <p class="text-sm text-gray-600 mt-2" *ngIf="pdfFiles().length > 0">
+              ✅ {{ pdfFiles().length }} archivo(s) seleccionado(s)
             </p>
-            <div *ngIf="pdfFiles().length > 0" class="mt-2 space-y-1">
-              <div *ngFor="let file of pdfFiles()" class="text-xs text-gray-600 flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <div *ngIf="pdfFiles().length > 0" class="mt-4 space-y-2 max-h-48 overflow-y-auto">
+              <div *ngFor="let file of pdfFiles()" class="text-sm text-gray-700 flex items-center bg-blue-50 p-2 rounded-lg">
+                <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
                 </svg>
                 {{ file.name }}
@@ -59,32 +69,41 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
           </div>
 
           <!-- Información -->
-          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p class="text-sm text-blue-900 mb-2">
-              <strong>ℹ️ Información:</strong>
+          <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6">
+            <p class="text-base text-blue-900 mb-3 font-semibold">
+              💡 Cómo funciona:
             </p>
-            <ul class="text-xs text-blue-800 space-y-1 ml-4">
-              <li>• El archivo Excel es obligatorio</li>
-              <li>• Los CVs en PDF son opcionales pero mejoran el análisis</li>
-              <li>• El análisis puede tomar 1-2 minutos</li>
-              <li>• La API key está configurada en el servidor (seguro)</li>
+            <ul class="text-sm text-blue-800 space-y-2">
+              <li class="flex items-start">
+                <span class="mr-2">🔹</span>
+                <span>Selecciona uno o más CVs en formato PDF</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2">🔹</span>
+                <span>La IA analizará automáticamente cada candidato</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2">🔹</span>
+                <span>Obtendrás scores, fortalezas y recomendaciones</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2">🔹</span>
+                <span>El análisis toma aproximadamente 1-2 minutos</span>
+              </li>
             </ul>
           </div>
 
           <!-- Botón de análisis -->
-          <div class="flex items-center justify-between pt-4 border-t">
-            <div class="text-xs text-gray-500">
-              * Campos obligatorios
-            </div>
+          <div class="pt-6">
             <button
               (click)="analyzeResumes()"
               [disabled]="loading() || !canAnalyze()"
-              [class]="'px-6 py-2 rounded-lg font-medium transition-colors ' +
+              [class]="'w-full py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 ' +
                        (loading() || !canAnalyze()
                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                         : 'bg-black text-white hover:bg-gray-800')"
+                         : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:scale-105')"
             >
-              <span *ngIf="!loading()">🚀 Analizar Candidatos</span>
+              <span *ngIf="!loading()">🚀 Analizar Candidatos con IA</span>
               <span *ngIf="loading()">
                 <span class="inline-block animate-spin mr-2">⏳</span>
                 Analizando...
@@ -98,8 +117,10 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
           <strong>❌ Error:</strong> {{ error() }}
         </div>
 
-        <!-- Progress Section -->
-        <div *ngIf="loading()" class="mt-6 bg-white rounded-lg shadow-md p-6">
+      </div>
+
+      <!-- Progress Section -->
+      <div *ngIf="loading()" class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-4xl mx-auto">
           <!-- Current Step -->
           <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
             <span>{{ getStepIcon(currentStep()) }}</span>
@@ -143,10 +164,9 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
             </div>
           </div>
 
-          <p class="text-center text-xs text-gray-500 mt-4">
-            Este proceso puede tomar 1-2 minutos dependiendo del número de candidatos...
-          </p>
-        </div>
+        <p class="text-center text-xs text-gray-500 mt-4">
+          Este proceso puede tomar 1-2 minutos dependiendo del número de candidatos...
+        </p>
       </div>
 
       <!-- Resultados -->
@@ -310,9 +330,9 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
 })
 export class CvAnalysisComponent {
   private cvAnalysisService = inject(CvAnalysisMockService);
+  private router = inject(Router);
 
   // Form data
-  excelFile = signal<File | null>(null);
   pdfFiles = signal<File[]>([]);
 
   // State
@@ -328,15 +348,7 @@ export class CvAnalysisComponent {
   progressLog = signal<ProgressEvent[]>([]);
 
   canAnalyze(): boolean {
-    return !!this.excelFile();
-  }
-
-  onExcelFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.excelFile.set(file);
-      this.error.set(null);
-    }
+    return this.pdfFiles().length > 0;
   }
 
   onPdfFilesSelected(event: any) {
@@ -347,7 +359,7 @@ export class CvAnalysisComponent {
 
   analyzeResumes() {
     if (!this.canAnalyze()) {
-      this.error.set('Por favor selecciona un archivo Excel');
+      this.error.set('Por favor selecciona al menos un archivo PDF');
       return;
     }
 
@@ -362,8 +374,11 @@ export class CvAnalysisComponent {
 
     console.log('🚀 Iniciando análisis con progreso en tiempo real...');
 
+    // Create a dummy Excel file for the mock service
+    const dummyExcel = new File(['dummy'], 'candidatos.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
     // Usar el método con SSE para progreso en tiempo real
-    this.cvAnalysisService.analyzeCVWithProgress(this.excelFile()!, this.pdfFiles()).subscribe({
+    this.cvAnalysisService.analyzeCVWithProgress(dummyExcel, this.pdfFiles()).subscribe({
       next: (event) => {
         // Verificar si es el evento final
         if ('done' in event) {
@@ -379,6 +394,11 @@ export class CvAnalysisComponent {
             console.log(`✅ Para entrevistar: ${finalEvent.analysis.resumen.paraEntrevistar}`);
             console.log(`🤔 Quizás: ${finalEvent.analysis.resumen.quizas}`);
             console.log(`❌ Descartados: ${finalEvent.analysis.resumen.descartados}`);
+
+            // Auto-redirect to candidates page after 2 seconds
+            setTimeout(() => {
+              this.router.navigate(['/candidates']);
+            }, 2000);
           } else {
             this.error.set(finalEvent.error || 'Error desconocido en el análisis');
             this.currentMessage.set(`Error: ${finalEvent.error}`);
@@ -452,7 +472,6 @@ export class CvAnalysisComponent {
 
   reset() {
     this.analysisResult.set(null);
-    this.excelFile.set(null);
     this.pdfFiles.set([]);
     this.error.set(null);
     this.filterCategory.set('todos');

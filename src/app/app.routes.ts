@@ -3,12 +3,23 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/cv-analysis',
-    pathMatch: 'full'
+    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'cv-analysis',
     loadComponent: () => import('./features/cv-analysis/cv-analysis.component').then(m => m.CvAnalysisComponent)
+  },
+  {
+    path: 'content-generator',
+    loadComponent: () => import('./features/content-generator/content-generator.component').then(m => m.ContentGeneratorComponent)
+  },
+  {
+    path: 'social-analytics',
+    loadComponent: () => import('./features/social-analytics/social-analytics.component').then(m => m.SocialAnalyticsComponent)
+  },
+  {
+    path: 'talent-matching',
+    loadComponent: () => import('./features/talent-matching/talent-matching.component').then(m => m.TalentMatchingComponent)
   },
   {
     path: 'candidates',
@@ -20,6 +31,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/cv-analysis'
+    redirectTo: '/'
   }
 ];
