@@ -30,13 +30,13 @@ import {
         <div class="flex items-start justify-between mb-6">
           <div class="flex-1">
             <div class="flex items-center gap-3 mb-2">
-              <h1 class="text-3xl font-bold text-gray-900 blur-[2px]">{{ candidate.nombre || candidate.name }}</h1>
+              <h1 class="text-3xl font-bold text-gray-900">{{ candidate.nombre || candidate.name }}</h1>
               <span class="px-3 py-1 text-sm rounded-lg" [class]="getCategoryBgColor(candidate.categoria || candidate.category!)">
                 {{ getCategoryIcon(candidate.categoria || candidate.category!) }} {{ getCategoryLabel(candidate.categoria || candidate.category!) }}
               </span>
             </div>
             <div class="space-y-1">
-              <p class="text-gray-600">📧 <span class="blur-[2px]">{{ candidate.email }}</span></p>
+              <p class="text-gray-600">📧 {{ candidate.email }}</p>
               <p *ngIf="candidate.telefono || candidate.phone" class="text-gray-600">
                 📞 {{ candidate.telefono || candidate.phone }}
               </p>
@@ -200,8 +200,8 @@ import {
                     {{ i + 1 }}
                   </div>
                   <div class="flex-1">
-                    <h3 class="font-semibold text-gray-900 blur-[2px]">{{ candidate.nombre || candidate.name }}</h3>
-                    <p class="text-sm text-gray-600 blur-[2px]">{{ candidate.email }}</p>
+                    <h3 class="font-semibold text-gray-900">{{ candidate.nombre || candidate.name }}</h3>
+                    <p class="text-sm text-gray-600">{{ candidate.email }}</p>
                     <p class="text-xs text-gray-500 mt-1">{{ candidate.fortalezaPrincipal || candidate.main_strength }}</p>
                   </div>
                   <div class="text-right">
@@ -313,8 +313,8 @@ import {
                   >
                     <div class="flex items-start justify-between">
                       <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900 blur-[2px]">{{ candidate.nombre || candidate.name }}</h3>
-                        <p class="text-sm text-gray-600 blur-[2px]">{{ candidate.email }}</p>
+                        <h3 class="font-semibold text-gray-900">{{ candidate.nombre || candidate.name }}</h3>
+                        <p class="text-sm text-gray-600">{{ candidate.email }}</p>
                         <p class="text-sm text-gray-500 mt-1">📞 {{ candidate.telefono || candidate.phone }}</p>
                         <p class="text-sm text-gray-700 mt-2">
                           <strong>Fortaleza:</strong> {{ candidate.fortalezaPrincipal || candidate.main_strength }}
@@ -387,7 +387,7 @@ import {
                     <p class="text-xs font-semibold text-gray-600 mb-2">🏆 Top 3:</p>
                     <div class="space-y-1">
                       <p *ngFor="let top of analysis.summary.top3" class="text-sm text-gray-700">
-                        <span class="blur-[2px]">{{ top.nombre }}</span> ({{ top.score }})
+                        {{ top.nombre }} ({{ top.score }})
                       </p>
                     </div>
                   </div>
