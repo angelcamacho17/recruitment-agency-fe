@@ -15,200 +15,150 @@ import {
 })
 export class AnalysesMockService {
 
-  private mockCandidates: CandidateDetail[] = [
-    {
-      id: 1,
-      analysis_id: 1,
-      nombre: 'María González',
-      email: 'maria.gonzalez@email.com',
-      telefono: '+34 612 345 678',
-      score: 92,
-      categoria: 'entrevistar',
-      fortalezaPrincipal: 'Excelente experiencia en desarrollo full-stack con React y Node.js',
-      banderaRoja: 'Cambios frecuentes de trabajo en los últimos 2 años',
-      fortalezas: [
-        'Dominio avanzado de TypeScript y Angular',
-        'Experiencia liderando equipos de 5+ desarrolladores',
-        'Certificaciones en AWS y Azure'
-      ],
-      areasAtencion: [
-        'Verificar motivos de cambios laborales frecuentes',
-        'Evaluar expectativas salariales'
-      ],
-      consistencia: 'Alta consistencia entre CV y respuestas del formulario',
-      preguntaSugerida: '¿Qué te motivó a cambiar de empresa tres veces en los últimos dos años?',
-      analysis_date: '2024-01-15T10:00:00Z'
-    },
-    {
-      id: 2,
-      analysis_id: 1,
-      nombre: 'Carlos Ruiz',
-      email: 'carlos.ruiz@email.com',
-      telefono: '+34 623 456 789',
-      score: 88,
-      categoria: 'entrevistar',
-      fortalezaPrincipal: 'Sólida experiencia en arquitectura de microservicios y DevOps',
-      banderaRoja: 'Poca experiencia con tecnologías frontend',
-      fortalezas: [
-        'Experto en Kubernetes y Docker',
-        'Implementación de CI/CD en proyectos enterprise',
-        'Conocimiento profundo de Python y Go'
-      ],
-      areasAtencion: [
-        'Validar capacidad de adaptación a stack frontend',
-        'Confirmar disponibilidad para trabajar remoto'
-      ],
-      consistencia: 'Muy buena consistencia, detalles bien alineados',
-      preguntaSugerida: '¿Cómo planeas desarrollar tus habilidades en tecnologías frontend?',
-      analysis_date: '2024-01-15T10:00:00Z'
-    },
-    {
-      id: 3,
-      analysis_id: 1,
-      nombre: 'Ana Martínez',
-      email: 'ana.martinez@email.com',
-      telefono: '+34 634 567 890',
-      score: 85,
-      categoria: 'entrevistar',
-      fortalezaPrincipal: 'Gran capacidad de comunicación y experiencia en mentoring',
-      banderaRoja: 'Experiencia técnica limitada a un solo stack tecnológico',
-      fortalezas: [
-        'Habilidades de liderazgo demostradas',
-        'Participación en comunidades tech',
-        'Enfoque en buenas prácticas y clean code'
-      ],
-      areasAtencion: [
-        'Evaluar capacidad de aprendizaje de nuevas tecnologías',
-        'Verificar nivel técnico actual'
-      ],
-      consistencia: 'Buena consistencia general',
-      preguntaSugerida: '¿Cómo te mantienes actualizada con nuevas tecnologías fuera de tu stack actual?',
-      analysis_date: '2024-01-15T10:00:00Z'
-    },
-    {
-      id: 4,
-      analysis_id: 2,
-      nombre: 'David López',
-      email: 'david.lopez@email.com',
-      telefono: '+34 645 678 901',
-      score: 72,
-      categoria: 'quizas',
-      fortalezaPrincipal: 'Conocimiento en testing automatizado y QA',
-      banderaRoja: 'Poca experiencia en desarrollo de features complejas',
-      fortalezas: [
-        'Experto en Jest, Cypress y Selenium',
-        'Implementó suite completa de tests en proyecto anterior'
-      ],
-      areasAtencion: [
-        'Perfil más orientado a QA que desarrollo',
-        'Verificar interés real en desarrollo full-stack'
-      ],
-      consistencia: 'Consistencia moderada, algunas discrepancias menores',
-      preguntaSugerida: '¿Prefieres enfocarte en desarrollo o en QA/testing?',
-      analysis_date: '2024-01-10T10:00:00Z'
-    },
-    {
-      id: 5,
-      analysis_id: 2,
-      nombre: 'Laura Fernández',
-      email: 'laura.fernandez@email.com',
-      telefono: '+34 656 789 012',
-      score: 68,
-      categoria: 'quizas',
-      fortalezaPrincipal: 'Recién graduada con proyectos personales interesantes',
-      banderaRoja: 'Sin experiencia profesional real',
-      fortalezas: [
-        'Portfolio de proyectos personales bien estructurado',
-        'Conocimientos actualizados en tecnologías modernas'
-      ],
-      areasAtencion: [
-        'Falta de experiencia en entorno profesional',
-        'Necesitará mentoring intensivo inicial'
-      ],
-      consistencia: 'Buena consistencia para perfil junior',
-      preguntaSugerida: '¿Cómo manejas el trabajo bajo presión y deadlines estrictos?',
-      analysis_date: '2024-01-10T10:00:00Z'
-    },
-    {
-      id: 6,
-      analysis_id: 3,
-      nombre: 'Pedro Jiménez',
-      email: 'pedro.jimenez@email.com',
-      telefono: '+34 689 012 345',
-      score: 78,
-      categoria: 'quizas',
-      fortalezaPrincipal: 'Experiencia en desarrollo móvil con React Native',
-      banderaRoja: 'Poca experiencia en backend',
-      fortalezas: [
-        'Apps publicadas en App Store y Play Store',
-        'Conocimiento de UX/UI design'
-      ],
-      areasAtencion: [
-        'Validar conocimientos de backend',
-        'Evaluar capacidad de trabajo en equipo'
-      ],
-      consistencia: 'Buena consistencia',
-      preguntaSugerida: '¿Cómo te sientes trabajando en el lado del servidor?',
-      analysis_date: '2024-01-05T10:00:00Z'
-    }
-  ];
+  private mockCandidates: CandidateDetail[] = this.generateMockCandidates();
 
-  private mockAnalyses: AnalysisSummary[] = [
-    {
-      id: 1,
-      excel_file_name: 'candidatos_enero_2024.xlsx',
-      analysis_date: '2024-01-15T10:00:00Z',
-      total_candidates: 3,
-      total_cvs_processed: 3,
-      created_at: '2024-01-15T10:00:00Z',
-      summary: {
-        totalAnalizados: 3,
-        paraEntrevistar: 3,
-        quizas: 0,
-        descartados: 0,
-        top3: [
-          { nombre: 'María González', score: 92, razon: 'Excelente experiencia full-stack' },
-          { nombre: 'Carlos Ruiz', score: 88, razon: 'Sólida experiencia en DevOps' },
-          { nombre: 'Ana Martínez', score: 85, razon: 'Gran capacidad de comunicación' }
-        ]
+  private generateMockCandidates(): CandidateDetail[] {
+    const nombres = [
+      'María González', 'Carlos Ruiz', 'Ana Martínez', 'David López', 'Laura Fernández',
+      'Jorge Sánchez', 'Elena Torres', 'Pablo Rodríguez', 'Carmen Silva', 'Miguel Ángel Pérez',
+      'Isabel Moreno', 'Francisco Jiménez', 'Lucía Romero', 'Javier Navarro', 'Patricia Muñoz',
+      'Alejandro García', 'Cristina Álvarez', 'Raúl Delgado', 'Marta Vega', 'Antonio Castro',
+      'Sara Ortiz', 'Daniel Rubio', 'Natalia Vargas', 'Roberto Medina', 'Andrea Soto',
+      'Marcos Herrera', 'Beatriz Iglesias', 'Adrián Fuentes', 'Verónica Aguilar', 'Sergio Ramos',
+      'Silvia Cortés', 'Iván Montero', 'Gloria Santana', 'Óscar Domínguez', 'Teresa Guerrero',
+      'Fernando Márquez', 'Rocío Giménez', 'Víctor León', 'Pilar Méndez', 'Enrique Cruz',
+      'Alicia Blanco', 'Manuel Herrero', 'Irene Gallardo', 'Alberto Cabrera', 'Rosa Castillo',
+      'Luis Vázquez', 'Mónica Reyes', 'Guillermo Prieto', 'Eva Santos', 'Andrés Campos',
+      'Julia Molina', 'Diego Nieto', 'Claudia Pascual', 'Rubén Suárez', 'Marina Lozano',
+      'Pedro Carrasco', 'Sofía Cano', 'Ángel Esteban', 'Miriam Lorenzo', 'José Luis Calvo',
+      'Carolina Benítez', 'Raquel Peña', 'Héctor Mora', 'Lidia Gil', 'Jesús Soler',
+      'Esther Bravo', 'Ricardo Ramírez', 'Inmaculada Ferrer', 'César Flores', 'Diana Núñez',
+      'Ignacio Parra', 'Nuria Sanz', 'Ángela Ibáñez', 'Eduardo Crespo', 'Elisa Caballero',
+      'Alberto Mendoza', 'Celia Pastor'
+    ];
+
+    const fortalezas = [
+      'Excelente experiencia en desarrollo full-stack con React y Node.js',
+      'Sólida experiencia en arquitectura de microservicios y DevOps',
+      'Gran capacidad de comunicación y experiencia en mentoring',
+      'Conocimiento en testing automatizado y QA',
+      'Recién graduado con proyectos personales interesantes',
+      'Experto en bases de datos SQL y NoSQL',
+      'Experiencia en metodologías ágiles y Scrum',
+      'Fuerte background en seguridad informática',
+      'Especialista en cloud computing (AWS, Azure, GCP)',
+      'Dominio de Python y machine learning',
+      'Experiencia liderando equipos distribuidos',
+      'Conocimientos avanzados en UX/UI design',
+      'Experto en optimización de rendimiento',
+      'Sólida experiencia en API design y REST',
+      'Conocimiento profundo de arquitectura hexagonal'
+    ];
+
+    const banderas = [
+      'Cambios frecuentes de trabajo en los últimos 2 años',
+      'Poca experiencia con tecnologías frontend',
+      'Experiencia técnica limitada a un solo stack',
+      'Poca experiencia en desarrollo de features complejas',
+      'Sin experiencia profesional real',
+      'Stack tecnológico muy desactualizado',
+      'Perfil no alineado con los requisitos',
+      'Expectativas salariales elevadas',
+      'Disponibilidad limitada',
+      'Nivel de inglés básico',
+      'Poca experiencia en trabajo remoto',
+      'Falta de certificaciones relevantes',
+      'Gaps en historial laboral',
+      'Ninguna destacable'
+    ];
+
+    const candidates: CandidateDetail[] = [];
+    const count = 77;
+
+    for (let i = 0; i < count; i++) {
+      let categoria: 'entrevistar' | 'quizas' | 'descartar';
+      let score: number;
+
+      // Distribución: 35% entrevistar, 35% quizás, 30% descartar
+      if (i < Math.floor(count * 0.35)) {
+        categoria = 'entrevistar';
+        score = 80 + Math.floor(Math.random() * 20); // 80-100
+      } else if (i < Math.floor(count * 0.70)) {
+        categoria = 'quizas';
+        score = 60 + Math.floor(Math.random() * 20); // 60-80
+      } else {
+        categoria = 'descartar';
+        score = 30 + Math.floor(Math.random() * 30); // 30-60
       }
-    },
-    {
-      id: 2,
-      excel_file_name: 'candidatos_segunda_ronda.xlsx',
-      analysis_date: '2024-01-10T10:00:00Z',
-      total_candidates: 2,
-      total_cvs_processed: 2,
-      created_at: '2024-01-10T10:00:00Z',
-      summary: {
-        totalAnalizados: 2,
-        paraEntrevistar: 0,
-        quizas: 2,
-        descartados: 0,
-        top3: [
-          { nombre: 'David López', score: 72, razon: 'Buen conocimiento en testing' },
-          { nombre: 'Laura Fernández', score: 68, razon: 'Perfil junior prometedor' }
-        ]
-      }
-    },
-    {
-      id: 3,
-      excel_file_name: 'candidatos_especializados.xlsx',
-      analysis_date: '2024-01-05T10:00:00Z',
-      total_candidates: 1,
-      total_cvs_processed: 1,
-      created_at: '2024-01-05T10:00:00Z',
-      summary: {
-        totalAnalizados: 1,
-        paraEntrevistar: 0,
-        quizas: 1,
-        descartados: 0,
-        top3: [
-          { nombre: 'Pedro Jiménez', score: 78, razon: 'Experiencia móvil' }
-        ]
-      }
+
+      const nombre = nombres[i % nombres.length];
+      const emailName = nombre.toLowerCase().replace(/\s+/g, '.').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      candidates.push({
+        id: i + 1,
+        analysis_id: 1, // Todos en el mismo análisis
+        nombre: nombre + (i >= nombres.length ? ` ${Math.floor(i / nombres.length) + 1}` : ''),
+        email: `${emailName}${i >= nombres.length ? i : ''}@email.com`,
+        telefono: `+34 6${String(10 + i).padStart(2, '0')} ${String(100 + i).padStart(3, '0')} ${String(100 + i).padStart(3, '0')}`,
+        score: score,
+        categoria: categoria,
+        fortalezaPrincipal: fortalezas[i % fortalezas.length],
+        banderaRoja: banderas[i % banderas.length],
+        fortalezas: categoria === 'descartar' ? [] : [
+          'Habilidades técnicas sólidas',
+          'Buena comunicación'
+        ],
+        areasAtencion: categoria === 'entrevistar' ? [
+          'Verificar referencias',
+          'Evaluar fit cultural'
+        ] : [
+          'Requiere evaluación adicional',
+          'Verificar expectativas'
+        ],
+        consistencia: categoria === 'entrevistar' ? 'Alta consistencia' : categoria === 'quizas' ? 'Consistencia moderada' : 'Baja consistencia',
+        preguntaSugerida: categoria === 'descartar' ? undefined : '¿Cuáles son tus principales motivaciones para este cambio?',
+        analysis_date: '2024-01-15T10:00:00Z'
+      });
     }
-  ];
+
+    // Ordenar por score descendente
+    candidates.sort((a, b) => b.score - a.score);
+
+    return candidates;
+  }
+
+  private mockAnalyses: AnalysisSummary[] = this.generateMockAnalyses();
+
+  private generateMockAnalyses(): AnalysisSummary[] {
+    const totalCandidates = this.mockCandidates.length;
+    const paraEntrevistar = this.mockCandidates.filter(c => c.categoria === 'entrevistar').length;
+    const quizas = this.mockCandidates.filter(c => c.categoria === 'quizas').length;
+    const descartados = this.mockCandidates.filter(c => c.categoria === 'descartar').length;
+
+    const top3 = this.mockCandidates.slice(0, 3).map(c => ({
+      nombre: c.nombre,
+      score: c.score,
+      razon: c.fortalezaPrincipal
+    }));
+
+    return [
+      {
+        id: 1,
+        excel_file_name: 'candidatos_enero_2024.xlsx',
+        analysis_date: '2024-01-15T10:00:00Z',
+        total_candidates: totalCandidates,
+        total_cvs_processed: totalCandidates,
+        created_at: '2024-01-15T10:00:00Z',
+        summary: {
+          totalAnalizados: totalCandidates,
+          paraEntrevistar: paraEntrevistar,
+          quizas: quizas,
+          descartados: descartados,
+          top3: top3
+        }
+      }
+    ];
+  }
 
   constructor() {
     console.log('🎭 Mock Analyses Service initialized');
