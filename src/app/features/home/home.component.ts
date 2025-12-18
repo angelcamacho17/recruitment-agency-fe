@@ -32,7 +32,7 @@ interface AIAgent {
           </div>
       
           <!-- Stats Section -->
-          <div class="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div class="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-16">
             <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
               <div class="text-4xl font-bold text-primary-600 mb-2">{{ agents.length }}</div>
               <div class="text-gray-600 font-medium">Agentes IA</div>
