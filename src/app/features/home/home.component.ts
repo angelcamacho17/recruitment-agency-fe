@@ -30,6 +30,26 @@ interface AIAgent {
               Potencia tu agencia de reclutamiento y marketing con inteligencia artificial de última generación
             </p>
           </div>
+      
+          <!-- Stats Section -->
+          <div class="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <div class="text-4xl font-bold text-primary-600 mb-2">{{ agents.length }}</div>
+              <div class="text-gray-600 font-medium">Agentes IA</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <div class="text-4xl font-bold text-primary-600 mb-2">24/7</div>
+              <div class="text-gray-600 font-medium">Disponibilidad</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <div class="text-4xl font-bold text-primary-600 mb-2">∞</div>
+              <div class="text-gray-600 font-medium">Análisis</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <div class="text-4xl font-bold text-primary-600 mb-2">100%</div>
+              <div class="text-gray-600 font-medium">IA Powered</div>
+            </div>
+          </div>
 
           <!-- Agent Cards Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -73,25 +93,7 @@ interface AIAgent {
             </div>
           </div>
 
-          <!-- Stats Section -->
-          <div class="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">{{ agents.length }}</div>
-              <div class="text-gray-600 font-medium">Agentes IA</div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">24/7</div>
-              <div class="text-gray-600 font-medium">Disponibilidad</div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">∞</div>
-              <div class="text-gray-600 font-medium">Análisis</div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <div class="text-4xl font-bold text-primary-600 mb-2">100%</div>
-              <div class="text-gray-600 font-medium">IA Powered</div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -110,26 +112,6 @@ export class HomeComponent {
       gradient: 'bg-gradient-to-br from-blue-500/90 to-blue-700/90'
     },
     {
-      id: 'content-genius',
-      name: 'Content Genius',
-      title: 'Generador de Contenido',
-      description: 'Crea contenido de marketing personalizado y atractivo para tus campañas. Posts, emails y copys optimizados con IA.',
-      icon: '✨',
-      route: '/content-generator',
-      color: 'bg-gradient-to-br from-purple-500 to-purple-600',
-      gradient: 'bg-gradient-to-br from-purple-500/90 to-purple-700/90'
-    },
-    {
-      id: 'social-pulse',
-      name: 'Social Pulse',
-      title: 'Análisis de Redes Sociales',
-      description: 'Analiza tendencias, engagement y rendimiento en redes sociales. Obtén insights accionables para tu estrategia.',
-      icon: '📊',
-      route: '/social-analytics',
-      color: 'bg-gradient-to-br from-pink-500 to-pink-600',
-      gradient: 'bg-gradient-to-br from-pink-500/90 to-pink-700/90'
-    },
-    {
       id: 'talent-matcher',
       name: 'Talent Matcher',
       title: 'Matching Inteligente',
@@ -138,6 +120,16 @@ export class HomeComponent {
       route: '/talent-matching',
       color: 'bg-gradient-to-br from-green-500 to-green-600',
       gradient: 'bg-gradient-to-br from-green-500/90 to-green-700/90'
+    },
+    {
+      id: 'content-genius',
+      name: 'Content Genius',
+      title: 'Generador de Contenido',
+      description: 'Crea contenido personalizado que refleja tu marca. IA que aprende tu voz, audiencia y valores para contenido auténtico.',
+      icon: '✨',
+      route: '/content-generator',
+      color: 'bg-gradient-to-br from-purple-500 to-purple-600',
+      gradient: 'bg-gradient-to-br from-purple-500/90 to-purple-700/90'
     }
   ];
 }

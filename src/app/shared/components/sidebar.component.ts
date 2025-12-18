@@ -76,20 +76,6 @@ import { RouterModule } from '@angular/router';
             </div>
           </a>
 
-          <!-- Social Pulse -->
-          <a
-            routerLink="/social-analytics"
-            routerLinkActive="bg-gradient-to-r from-pink-600 to-pink-700 shadow-xl scale-105"
-            (click)="closeMenu()"
-            class="flex items-center space-x-3 px-5 py-4 rounded-xl hover:bg-gray-800 transition-all duration-300 group"
-          >
-            <span class="text-2xl">📊</span>
-            <div class="flex-1">
-              <div class="font-semibold">Social Pulse</div>
-              <div class="text-xs text-gray-400">Análisis de RRSS</div>
-            </div>
-          </a>
-
           <!-- Talent Matcher -->
           <a
             routerLink="/talent-matching"

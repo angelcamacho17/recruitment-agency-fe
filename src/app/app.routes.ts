@@ -14,10 +14,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/content-generator/content-generator.component').then(m => m.ContentGeneratorComponent)
   },
   {
-    path: 'social-analytics',
-    loadComponent: () => import('./features/social-analytics/social-analytics.component').then(m => m.SocialAnalyticsComponent)
-  },
-  {
     path: 'talent-matching',
     loadComponent: () => import('./features/talent-matching/talent-matching.component').then(m => m.TalentMatchingComponent)
   },

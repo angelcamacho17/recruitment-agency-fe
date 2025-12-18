@@ -32,9 +32,6 @@ interface AgentInfo {
             </div>
             <!-- Default Home -->
             <div *ngIf="!currentAgent()" class="flex items-center gap-3">
-              <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
-                <span class="text-2xl">🏠</span>
-              </div>
               <div>
                 <h1 class="text-xl md:text-2xl font-bold text-gray-900">Centro de Agentes IA</h1>
                 <p class="text-xs text-gray-500">Plataforma de Reclutamiento y Marketing</p>
@@ -68,12 +65,6 @@ export class NavbarComponent {
       icon: '✨',
       color: 'bg-gradient-to-br from-purple-500 to-purple-600',
       gradient: 'border-purple-500'
-    },
-    '/social-analytics': {
-      name: 'Social Pulse',
-      icon: '📊',
-      color: 'bg-gradient-to-br from-pink-500 to-pink-600',
-      gradient: 'border-pink-500'
     },
     '/talent-matching': {
       name: 'Talent Matcher',
@@ -123,7 +114,6 @@ export class NavbarComponent {
     const colorMap: Record<string, string> = {
       'CV Scout': '#3b82f6',
       'Content Genius': '#a855f7',
-      'Social Pulse': '#ec4899',
       'Talent Matcher': '#10b981',
       'Gestión de Candidatos': '#eeb30a'
     };

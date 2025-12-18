@@ -1,0 +1,42 @@
+[debug] [2025-12-18T22:54:13.894Z] ----------------------------------------------------------------------
+[debug] [2025-12-18T22:54:13.895Z] Command:       /Users/angelcamacho/.nvm/versions/node/v20.10.0/bin/node /Users/angelcamacho/.nvm/versions/node/v20.10.0/bin/firebase deploy --only hosting
+[debug] [2025-12-18T22:54:13.895Z] CLI Version:   14.4.0
+[debug] [2025-12-18T22:54:13.895Z] Platform:      darwin
+[debug] [2025-12-18T22:54:13.895Z] Node Version:  v20.10.0
+[debug] [2025-12-18T22:54:13.895Z] Time:          Thu Dec 18 2025 18:54:13 GMT-0400 (Venezuela Time)
+[debug] [2025-12-18T22:54:13.895Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-12-18T22:54:13.896Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2025-12-18T22:54:13.995Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-18T22:54:13.995Z] > authorizing via signed-in user (angelcamacho.developer@gmail.com)
+[debug] [2025-12-18T22:54:13.995Z] [iam] checking project recruitment-agency-fe for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-12-18T22:54:13.995Z] Checked if tokens are valid: false, expires at: 1765922888860
+[debug] [2025-12-18T22:54:13.996Z] Checked if tokens are valid: false, expires at: 1765922888860
+[debug] [2025-12-18T22:54:13.996Z] > refreshing access token with scopes: []
+[debug] [2025-12-18T22:54:13.996Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-12-18T22:54:13.996Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-18T22:54:14.217Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-12-18T22:54:14.217Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-18T22:54:14.231Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/recruitment-agency-fe:testIamPermissions [none]
+[debug] [2025-12-18T22:54:14.231Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/recruitment-agency-fe:testIamPermissions x-goog-quota-user=projects/recruitment-agency-fe
+[debug] [2025-12-18T22:54:14.231Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/recruitment-agency-fe:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-12-18T22:54:14.329Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-12-18T22:54:14.329Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2025-12-18T22:54:14.733Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/recruitment-agency-fe:testIamPermissions 200
+[debug] [2025-12-18T22:54:14.733Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/recruitment-agency-fe:testIamPermissions {}
+[debug] [2025-12-18T22:54:14.733Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project recruitment-agency-fe:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2025-12-18T22:54:14.734Z] Checked if tokens are valid: true, expires at: 1766102053217
+[debug] [2025-12-18T22:54:14.734Z] Checked if tokens are valid: true, expires at: 1766102053217
+[debug] [2025-12-18T22:54:14.734Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/recruitment-agency-fe [none]
+[debug] [2025-12-18T22:54:15.366Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/recruitment-agency-fe 403
+[debug] [2025-12-18T22:54:15.366Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/recruitment-agency-fe {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2025-12-18T22:54:15.367Z] Request to https://firebase.googleapis.com/v1beta1/projects/recruitment-agency-fe had HTTP Error: 403, The caller does not have permission
+[debug] [2025-12-18T22:54:15.638Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/recruitment-agency-fe had HTTP Error: 403, The caller does not have permission
+    at responseToError (/Users/angelcamacho/.nvm/versions/node/v20.10.0/lib/node_modules/firebase-tools/lib/responseToError.js:52:12)
+    at RetryOperation._fn (/Users/angelcamacho/.nvm/versions/node/v20.10.0/lib/node_modules/firebase-tools/lib/apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project recruitment-agency-fe. Please make sure the project exists and your account has permission to access it.
