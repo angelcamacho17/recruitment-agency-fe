@@ -3,24 +3,8 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/cv-analysis',
     pathMatch: 'full'
-  },
-  {
-    path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
-  },
-  {
-    path: 'contacts',
-    loadComponent: () => import('./features/contacts/contacts-list.component').then(m => m.ContactsListComponent)
-  },
-  {
-    path: 'contacts/:id',
-    loadComponent: () => import('./features/contacts/contact-detail.component').then(m => m.ContactDetailComponent)
-  },
-  {
-    path: 'emails',
-    loadComponent: () => import('./features/emails/emails-list.component').then(m => m.EmailsListComponent)
   },
   {
     path: 'cv-analysis',
@@ -36,6 +20,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/dashboard'
+    redirectTo: '/cv-analysis'
   }
 ];

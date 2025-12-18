@@ -10,8 +10,8 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
   imports: [CommonModule, FormsModule],
   template: `
     <div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Análisis de CVs con Claude</h1>
-      <p class="text-gray-600 mb-6 text-sm sm:text-base">Analiza candidatos para Victoria Poggioli usando Inteligencia Artificial</p>
+      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Análisis de CVs con IA</h1>
+      <p class="text-gray-600 mb-6 text-sm sm:text-base">Analiza candidatos usando Inteligencia Artificial</p>
 
       <!-- Formulario de carga -->
       <div *ngIf="!analysisResult()" class="bg-white rounded-lg shadow-md p-4 sm:p-6 max-w-4xl">
