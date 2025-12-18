@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "whatsapp-dashboard": {
+    "recruitment-agency-fe": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/whatsapp-dashboard",
+            "outputPath": "dist/recruitment-agency-fe",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -79,13 +79,13 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "whatsapp-dashboard:build:production"
+              "buildTarget": "recruitment-agency-fe:build:production"
             },
             "development": {
-              "buildTarget": "whatsapp-dashboard:build:development"
+              "buildTarget": "recruitment-agency-fe:build:development"
             },
             "local": {
-              "buildTarget": "whatsapp-dashboard:build:local"
+              "buildTarget": "recruitment-agency-fe:build:local"
             }
           },
           "defaultConfiguration": "development"
