@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -98,22 +98,50 @@ import { RouterModule } from '@angular/router';
           <a
             routerLink="/candidates"
             routerLinkActive="bg-primary-600 shadow-xl scale-105"
-            (click)="closeMenu()"
-            class="flex items-center space-x-3 px-5 py-4 rounded-xl hover:bg-gray-800 transition-all duration-300 group"
+            (click)="closeMenuAndClearNotification()"
+            class="flex items-center space-x-3 px-5 py-4 rounded-xl hover:bg-gray-800 transition-all duration-300 group relative"
           >
             <span class="text-2xl">📋</span>
             <div class="flex-1">
               <div class="font-semibold">Candidatos</div>
               <div class="text-xs text-gray-400">Ver análisis guardados</div>
             </div>
+            <span
+              *ngIf="hasNewAnalysis()"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse"
+            >
+              1
+            </span>
           </a>
         </div>
       </nav>
     </aside>
   `
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit, OnDestroy {
   isOpen = signal(false);
+  hasNewAnalysis = signal(false);
+  private boundEventListener: any;
+
+  ngOnInit() {
+    // Check if there's a notification on init
+    this.checkNotification();
+
+    // Listen for analysis completion events
+    this.boundEventListener = () => this.checkNotification();
+    window.addEventListener('analysisCompleted', this.boundEventListener);
+  }
+
+  ngOnDestroy() {
+    if (this.boundEventListener) {
+      window.removeEventListener('analysisCompleted', this.boundEventListener);
+    }
+  }
+
+  checkNotification() {
+    const notification = localStorage.getItem('newAnalysisNotification');
+    this.hasNewAnalysis.set(notification === 'true');
+  }
 
   toggleMenu() {
     this.isOpen.update(value => !value);
@@ -121,5 +149,11 @@ export class SidebarComponent {
 
   closeMenu() {
     this.isOpen.set(false);
+  }
+
+  closeMenuAndClearNotification() {
+    this.closeMenu();
+    localStorage.removeItem('newAnalysisNotification');
+    this.hasNewAnalysis.set(false);
   }
 }

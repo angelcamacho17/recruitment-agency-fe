@@ -376,10 +376,11 @@ export class CvAnalysisComponent {
             console.log(`🤔 Quizás: ${finalEvent.analysis.resumen.quizas}`);
             console.log(`❌ Descartados: ${finalEvent.analysis.resumen.descartados}`);
 
-            // Auto-redirect to candidates page after 2 seconds
-            setTimeout(() => {
-              this.router.navigate(['/candidates']);
-            }, 2000);
+            // Set notification in localStorage for sidebar
+            localStorage.setItem('newAnalysisNotification', 'true');
+
+            // Dispatch custom event to update sidebar
+            window.dispatchEvent(new Event('analysisCompleted'));
           } else {
             this.error.set(finalEvent.error || 'Error desconocido en el análisis');
             this.currentMessage.set(`Error: ${finalEvent.error}`);
