@@ -10,12 +10,10 @@ import { RouterModule } from '@angular/router';
     <!-- Mobile menu button -->
     <button
       (click)="toggleMenu()"
-      class="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-black text-white"
+      class="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-black text-white text-2xl"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path *ngIf="!isOpen()" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        <path *ngIf="isOpen()" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+      <span *ngIf="!isOpen()">☰</span>
+      <span *ngIf="isOpen()">✕</span>
     </button>
 
     <!-- Overlay for mobile -->
@@ -103,9 +101,7 @@ import { RouterModule } from '@angular/router';
             (click)="closeMenu()"
             class="flex items-center space-x-3 px-5 py-4 rounded-xl hover:bg-gray-800 transition-all duration-300 group"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-            </svg>
+            <span class="text-2xl">📋</span>
             <div class="flex-1">
               <div class="font-semibold">Candidatos</div>
               <div class="text-xs text-gray-400">Ver análisis guardados</div>
