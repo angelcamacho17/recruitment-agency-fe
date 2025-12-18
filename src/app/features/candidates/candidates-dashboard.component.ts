@@ -9,12 +9,14 @@ import {
   Statistics,
   CandidateSearchParams
 } from '../../core/models/analyses.model';
+import { DemoBannerComponent } from '../../shared/components/demo-banner.component';
 
 @Component({
   selector: 'app-candidates-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, DemoBannerComponent],
   template: `
+    <app-demo-banner></app-demo-banner>
     <div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
       <!-- Back Button (when viewing candidate detail) -->
       <button

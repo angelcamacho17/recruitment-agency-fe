@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CvAnalysisMockService } from '../../core/services/cv-analysis-mock.service';
 import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../../core/models/cv-analysis.model';
+import { DemoBannerComponent } from '../../shared/components/demo-banner.component';
 
 @Component({
   selector: 'app-cv-analysis',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, DemoBannerComponent],
   template: `
+    <app-demo-banner></app-demo-banner>
     <div class="p-4 sm:p-6 bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen">
       <!-- Back to home -->
       <button

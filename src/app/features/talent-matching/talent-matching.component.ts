@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DemoBannerComponent } from '../../shared/components/demo-banner.component';
 
 interface JobPosition {
   id: string;
@@ -26,8 +27,9 @@ interface CandidateMatch {
 @Component({
   selector: 'app-talent-matching',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, DemoBannerComponent],
   template: `
+    <app-demo-banner></app-demo-banner>
     <div class="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 p-6">
       <div class="max-w-6xl mx-auto">
         <!-- Back to Home -->
