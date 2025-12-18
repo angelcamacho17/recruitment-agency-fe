@@ -19,89 +19,66 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
         <span>←</span> Volver al Centro de Agentes
       </button>
 
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
-          <span class="text-5xl">🎯</span>
+      <!-- Compact Header -->
+      <div class="flex items-center justify-between max-w-6xl mx-auto mb-6">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+            <span class="text-4xl">🎯</span>
+          </div>
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900">CV Scout</h1>
+            <p class="text-sm text-gray-600">Análisis Inteligente de CVs con IA</p>
+          </div>
         </div>
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">CV Scout</h1>
-        <p class="text-xl text-gray-600">Análisis Inteligente de CVs con IA</p>
-      </div>
-
-      <!-- Prominent button to view candidates -->
-      <div class="max-w-4xl mx-auto mb-6">
         <a
           routerLink="/candidates"
-          class="block bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 text-center"
+          class="bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 whitespace-nowrap"
         >
-          📊 Ver Análisis de CVs Guardados
+          📊 Ver CVs Guardados
         </a>
       </div>
 
-      <!-- Formulario de carga -->
-      <div *ngIf="!analysisResult() && !loading()" class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-4xl mx-auto">
-        <div class="space-y-6">
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Subir CVs para Análisis</h2>
+      <!-- Time Savings Disclaimer -->
+      <div class="max-w-6xl mx-auto mb-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-4 shadow-lg">
+        <div class="flex items-center justify-center gap-3 text-center">
+          <span class="text-2xl">⏱️</span>
+          <p class="font-bold text-lg">77 CVs analizados = ~45 horas humanas ahorradas</p>
+          <span class="text-sm opacity-90">(25 min lectura + 10 min evaluación por CV)</span>
+        </div>
+      </div>
 
-          <!-- CVs en PDF -->
-          <div>
-            <label class="block text-lg font-semibold text-gray-800 mb-3">
-              📄 Selecciona los CVs en PDF *
-            </label>
+      <!-- Formulario de carga - Compacto -->
+      <div *ngIf="!analysisResult() && !loading()" class="bg-white rounded-xl shadow-lg p-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Upload Section -->
+          <div class="lg:col-span-2">
+            <h2 class="text-xl font-bold text-gray-900 mb-3">Subir CVs para Análisis</h2>
             <input
               type="file"
               accept=".pdf"
               multiple
               (change)="onPdfFilesSelected($event)"
-              class="w-full text-base text-gray-700 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-base file:font-semibold file:bg-gradient-to-r file:from-blue-500 file:to-blue-600 file:text-white hover:file:from-blue-600 hover:file:to-blue-700 transition-all cursor-pointer"
+              class="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-blue-500 file:to-blue-600 file:text-white hover:file:from-blue-600 hover:file:to-blue-700 transition-all cursor-pointer mb-3"
             />
-            <p class="text-sm text-gray-600 mt-2" *ngIf="pdfFiles().length > 0">
+            <p class="text-sm text-gray-600 mb-3" *ngIf="pdfFiles().length > 0">
               ✅ {{ pdfFiles().length }} archivo(s) seleccionado(s)
             </p>
-            <div *ngIf="pdfFiles().length > 0" class="mt-4 space-y-2 max-h-48 overflow-y-auto">
-              <div *ngFor="let file of pdfFiles()" class="text-sm text-gray-700 flex items-center bg-blue-50 p-2 rounded-lg">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <div *ngIf="pdfFiles().length > 0" class="space-y-1 max-h-32 overflow-y-auto mb-3">
+              <div *ngFor="let file of pdfFiles()" class="text-xs text-gray-700 flex items-center bg-blue-50 p-2 rounded">
+                <svg class="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
                 </svg>
                 {{ file.name }}
               </div>
             </div>
-          </div>
-
-          <!-- Información -->
-          <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6">
-            <p class="text-base text-blue-900 mb-3 font-semibold">
-              💡 Cómo funciona:
-            </p>
-            <ul class="text-sm text-blue-800 space-y-2">
-              <li class="flex items-start">
-                <span class="mr-2">🔹</span>
-                <span>Selecciona uno o más CVs en formato PDF</span>
-              </li>
-              <li class="flex items-start">
-                <span class="mr-2">🔹</span>
-                <span>La IA analizará automáticamente cada candidato</span>
-              </li>
-              <li class="flex items-start">
-                <span class="mr-2">🔹</span>
-                <span>Obtendrás scores, fortalezas y recomendaciones</span>
-              </li>
-              <li class="flex items-start">
-                <span class="mr-2">🔹</span>
-                <span>El análisis toma aproximadamente 1-2 minutos</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Botón de análisis -->
-          <div class="pt-6">
             <button
               (click)="analyzeResumes()"
               [disabled]="loading() || !canAnalyze()"
-              [class]="'w-full py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 ' +
+              [class]="'w-full py-3 px-6 rounded-lg font-bold text-base transition-all duration-300 ' +
                        (loading() || !canAnalyze()
                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                         : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:scale-105')"
+                         : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:scale-105')"
             >
               <span *ngIf="!loading()">🚀 Analizar Candidatos con IA</span>
               <span *ngIf="loading()">
@@ -110,27 +87,46 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
               </span>
             </button>
           </div>
+
+          <!-- Info Section -->
+          <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-lg p-4">
+            <p class="text-sm text-blue-900 mb-2 font-semibold">💡 Cómo funciona:</p>
+            <ul class="text-xs text-blue-800 space-y-1.5">
+              <li class="flex items-start">
+                <span class="mr-1">•</span>
+                <span>Selecciona CVs en PDF</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-1">•</span>
+                <span>IA analiza automáticamente</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-1">•</span>
+                <span>Scores y recomendaciones</span>
+              </li>
+              <li class="flex items-start">
+                <span class="mr-1">•</span>
+                <span>Análisis en 1-2 minutos</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- Error -->
-        <div *ngIf="error()" class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
+        <div *ngIf="error()" class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded text-sm">
           <strong>❌ Error:</strong> {{ error() }}
         </div>
-
       </div>
 
-      <!-- Progress Section -->
-      <div *ngIf="loading()" class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-4xl mx-auto">
-          <!-- Current Step -->
-          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+      <!-- Progress Section - Compacto -->
+      <div *ngIf="loading()" class="bg-white rounded-xl shadow-lg p-6 max-w-6xl mx-auto">
+          <h3 class="text-base font-semibold mb-3 flex items-center gap-2">
             <span>{{ getStepIcon(currentStep()) }}</span>
             <span>{{ currentMessage() }}</span>
           </h3>
-
-          <!-- Progress Bar -->
-          <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden mb-2">
+          <div class="w-full h-6 bg-gray-200 rounded-full overflow-hidden mb-2">
             <div
-              class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300 flex items-center justify-end pr-2"
+              class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300 flex items-center justify-center"
               [style.width.%]="progressPercentage()"
             >
               <span *ngIf="progressPercentage() > 10" class="text-white text-xs font-bold">
@@ -138,35 +134,18 @@ import { AnalysisResult, CandidateScore, ProgressEvent, FinalResult } from '../.
               </span>
             </div>
           </div>
-          <p class="text-center text-sm font-medium text-blue-600 mb-4">
-            {{ progressPercentage() }}%
+          <p class="text-center text-xs text-gray-500 mb-3">
+            Este proceso puede tomar 1-2 minutos...
           </p>
-
-          <!-- Progress Log -->
-          <div *ngIf="progressLog().length > 0" class="mt-6">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3">📋 Detalle del progreso:</h4>
-            <div class="max-h-64 overflow-y-auto bg-gray-50 rounded-lg p-4 space-y-2">
-              <div
-                *ngFor="let log of progressLog()"
-                class="flex items-start gap-3 text-sm border-b border-gray-200 pb-2 last:border-0"
-                [class.text-red-600]="log.error"
-                [class.text-yellow-600]="log.warning"
-              >
-                <span class="text-lg">{{ getStepIcon(log.step) }}</span>
-                <div class="flex-1">
-                  <p class="text-gray-900">{{ log.message }}</p>
-                  <p *ngIf="log.info" class="text-xs text-gray-500 mt-1">{{ log.info }}</p>
-                </div>
-                <span class="text-xs text-gray-400 whitespace-nowrap">
-                  {{ log.timestamp | date:'HH:mm:ss' }}
-                </span>
+          <div *ngIf="progressLog().length > 0" class="mt-3">
+            <div class="max-h-40 overflow-y-auto bg-gray-50 rounded-lg p-3 space-y-1">
+              <div *ngFor="let log of progressLog()" class="flex items-center gap-2 text-xs">
+                <span>{{ getStepIcon(log.step) }}</span>
+                <p class="flex-1 text-gray-700">{{ log.message }}</p>
+                <span class="text-gray-400 text-xs">{{ log.timestamp | date:'HH:mm:ss' }}</span>
               </div>
             </div>
           </div>
-
-        <p class="text-center text-xs text-gray-500 mt-4">
-          Este proceso puede tomar 1-2 minutos dependiendo del número de candidatos...
-        </p>
       </div>
 
       <!-- Resultados -->
